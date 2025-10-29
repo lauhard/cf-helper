@@ -12,7 +12,7 @@ import type { CloudflareHelper, DefaultCloudflareplatform } from '../index.d.ts'
  * 
  * @template TPlatform - Platform interface, defaults to DefaultCloudflareplatform
  */
-export class CFCacheResponse<TPlatform extends DefaultCloudflareplatform = DefaultCloudflareplatform> extends CloudflareBase<TPlatform> {
+export class CFCache<TPlatform extends DefaultCloudflareplatform = DefaultCloudflareplatform> extends CloudflareBase<TPlatform> {
     #cache: Cache;
 
     constructor(platform: Readonly<TPlatform>) {

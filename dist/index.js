@@ -68,7 +68,7 @@ var CloudflareBase = class {
 };
 
 // src/helper/cloudflare-helper.ts
-var CFCacheResponse = class extends CloudflareBase {
+var CFCache = class extends CloudflareBase {
   #cache;
   constructor(platform) {
     super(platform);
@@ -315,6 +315,6 @@ var CFR2 = class _CFR2 extends CloudflareBase {
   }
 };
 
-export { CFCacheResponse, CFR2, CloudflareBase };
+export { CFCache, CFR2, CloudflareBase };
 //# sourceMappingURL=index.js.map
 //# sourceMappingURL=index.js.map
