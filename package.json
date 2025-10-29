@@ -1,0 +1,40 @@
+{
+  "name": "cf-helper",
+  "version": "1.0.0",
+  "description": "a cloudflare worker helper for sveltekit projects",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "module": "dist/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files":[
+    "dist"
+  ],
+  "sideEffects": false,
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "build": "tsup",
+    "lint": "tsc --noEmit",
+    "prepare": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lauhard/cf-helper.git"
+  },
+  "author": "lauhard",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lauhard/cf-helper/issues"
+  },
+  "homepage": "https://github.com/lauhard/cf-helper#readme",
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20251014.0",
+    "tsup": "^8.5.0",
+    "typescript": "^5.9.3"
+  }
+}
