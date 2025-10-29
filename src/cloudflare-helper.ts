@@ -1,7 +1,7 @@
 
 /// <reference types="@cloudflare/workers-types" />
 import { CloudflareBase } from './cloudflare-base';
-import type { CloudflareHelper, DefaultCloudflareplatform } from './index.d';
+import type { CloudflareHelper, DefaultCloudflareplatform } from './types';
 
 
 

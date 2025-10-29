@@ -1,5 +1,5 @@
 
-import type { DefaultCloudflareplatform } from './index.d';
+import type { DefaultCloudflareplatform } from './types';
 
 
 /**
