@@ -1,3 +1,3 @@
-export type { DefaultCloudflareplatform, CloudflareHelper } from './index.d';
-export { CloudflareBase } from './helper/cloudflare-base';
-export { CFCache, CFR2 } from './helper/cloudflare-helper';
+export { CloudflareBase } from './cloudflare-base';
+export { CFCache, CFR2 } from './cloudflare-helper';
+export type { CloudflareHelper, DefaultCloudflareplatform } from './index.d';

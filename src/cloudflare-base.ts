@@ -1,5 +1,5 @@
 
-import type { DefaultCloudflareplatform } from '../index.d.ts';
+import type { DefaultCloudflareplatform } from './index.d';
 
 
 /**
