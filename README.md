@@ -1,6 +1,6 @@
 # `cf-helper`
 
-`cf-helper` is a lightweight, zero-dependency TypeScript library designed to simplify interactions with Cloudflare services within a Cloudflare Workers environment. It provides convenient helper classes for managing the Cloudflare Cache API and R2 Storage, making it easier to build robust applications on the Cloudflare platform, especially for frameworks like SvelteKit.
+`cf-helper` is a lightweight, zero-dependency TypeScript library designed to simplify interactions with Cloudflare services within a Cloudflare Workers environment. It provides convenient helper classes for managing the Cloudflare Cache API and R2 Storage, making it easier to build robust applications on the Cloudflare platform, with SvelteKit.
 
 ## Installation
 
@@ -41,7 +41,7 @@ const r2Helper = new CFR2(platform);
 ```typescript
 const bucket = r2Helper.getBucket('images');
 if (bucket) {
-  const object = await bucket.get('image.jpg');
+  const object = await bucket.get(<key>);
 }
 ```
 
@@ -60,7 +60,7 @@ const bucketData = await r2Helper.listBucketData('my-bucket-name', { limit: 100 
 
 ### `CFCache` - Cache API Helper
 
-The `CFCache` class provides a simple interface for the Cloudflare Cache API. In the previous version of the README, this was incorrectly named `CFCacheResponse`. The correct class name is `CFCache`.
+The `CFCache` class provides a simple interface for the Cloudflare Cache API.
 
 **Create an instance of `CFCache`:**
 
