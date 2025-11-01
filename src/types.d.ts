@@ -18,24 +18,29 @@ export namespace CloudflareHelper {
     interface R2BucketInfo {
         name: string
     }
-    interface BucketOptions {
+    export interface BucketOptions {
         limit?: number;
         include: string[];
     }
 
-    interface CacheOptions {
+    export interface CacheOptions {
         normalizeKey?: (url: URL) => URL,
         headers?: Record<string, string>,
         baseRequest?: Request,
         method?: 'GET' | 'HEAD';
         debug?: boolean;
     }
-    interface CustomMetadata{
+    export interface CustomMetadata{
         file: File, 
         userId?: string, 
         category?: string, 
         processed?: string, 
         thumbnailGenerated?: string
+    }
+    export interface R2ListAllResult {
+        objects: R2Object[];
+        cursor: string | undefined;
+        hasMore: boolean;
     }
     // Generic environment interface - users can extend this in their projects
 }

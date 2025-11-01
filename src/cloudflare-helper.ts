@@ -308,11 +308,7 @@ export class CFR2<TPlatform extends DefaultCloudflareplatform = DefaultCloudflar
         return customMetadata;
     }
 
-    async listBucketData(name: string, options: R2ListOptions): Promise<{
-        objects: R2Object[];
-        cursor: string | undefined;
-        hasMore: boolean;
-    }> {
+    async listBucketData({ name, options }: { name: string; options: R2ListOptions }): Promise<CloudflareHelper.R2ListAllResult> {
         this.validateBucketName(name);
         
         const bucket = this.getBucket(name);

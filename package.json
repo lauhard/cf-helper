@@ -1,6 +1,6 @@
 {
   "name": "@lauhard/cf-helper",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "a cloudflare worker helper for sveltekit projects",
   "type": "module",
   "main": "dist/index.js",

@@ -1,7 +1,2 @@
 /node_modules
 /dist
-/build
-.npmignore
-.DS_Store
-.vscode
-.env*
