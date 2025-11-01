@@ -1,7 +1,7 @@
 
 /// <reference types="@cloudflare/workers-types" />
 import { CloudflareBase } from './cloudflare-base';
-import type { CloudflareHelper, DefaultCloudflareplatform } from './types';
+import type { CF, DefaultCloudflareplatform } from './types';
 
 
 
@@ -75,7 +75,7 @@ export class CFCache<TPlatform extends DefaultCloudflareplatform = DefaultCloudf
      * @param cacheOptions Optional cache options for key normalization
      * @returns The cached response or null if not found
      */
-    async match(request: Request, cacheOptions?: CloudflareHelper.CacheOptions): Promise<Response | null> {
+    async match({ request, cacheOptions }: { request: Request; cacheOptions?: CF.CacheOptions }): Promise<Response | null> {
 
         // Build cache key
         const cacheKey = this.buildCacheKey(request, cacheOptions?.normalizeKey);
@@ -102,7 +102,7 @@ export class CFCache<TPlatform extends DefaultCloudflareplatform = DefaultCloudf
      * @param cacheOptions 
      * @returns 
      */
-    async put(request: Request, response: Response, cacheOptions?: CloudflareHelper.CacheOptions): Promise<Response> {
+    async put({ request, response, cacheOptions }: { request: Request; response: Response; cacheOptions?: CF.CacheOptions }): Promise<Response> {
         // Build cache key
         const cacheKey = this.buildCacheKey(request, cacheOptions?.normalizeKey);
         if (!cacheKey) {
@@ -129,7 +129,7 @@ export class CFCache<TPlatform extends DefaultCloudflareplatform = DefaultCloudf
      * @param cacheOptions - Optional cache options for key normalization and base request
      * @returns A promise that resolves to true if the cached response was deleted, false otherwise
      */
-    async delete(deleteRequestOrURL: Request | URL | string, cacheOptions?: CloudflareHelper.CacheOptions): Promise<boolean> {
+    async delete({ deleteRequestOrURL, cacheOptions }: { deleteRequestOrURL: Request | URL | string; cacheOptions?: CF.CacheOptions }): Promise<boolean> {
 
         // Check deleteRequestOrURL type and create Request
         let deleteRequestUrl: string =  deleteRequestOrURL instanceof Request ?
@@ -221,14 +221,14 @@ export class CFR2<TPlatform extends DefaultCloudflareplatform = DefaultCloudflar
             throw new Error(`Metadata size (${metadataSize} bytes) exceeds limit of ${CFR2.MAX_METADATA_SIZE} bytes`);
         }
     }
-    
-    getBucket(bucketName: string): R2Bucket | null {
+
+    getBucket({ bucketName }: { bucketName: string }): R2Bucket | null {
         this.validateBucketName(bucketName);
         return this.getBinding<R2Bucket>(bucketName);
     }
   
     getBucketNames() {
-        const bucketNames: CloudflareHelper.R2BucketInfo[] = [];
+        const bucketNames: CF.R2BucketInfo[] = [];
         const env = this.getEnv();
         
         for (const [key, value] of Object.entries(env)) {
@@ -240,11 +240,11 @@ export class CFR2<TPlatform extends DefaultCloudflareplatform = DefaultCloudflar
         return bucketNames;
     }
 
-    async getBucketData(bucket: string, key: string): Promise<R2ObjectBody | null> {
+    async getBucketData({ bucket, key }: { bucket: string; key: string }): Promise<R2ObjectBody | null> {
         this.validateBucketName(bucket);
         this.validateKey(key);
-        
-        const R2Bucket = this.getBucket(bucket);
+
+        const R2Bucket = this.getBucket({ bucketName: bucket });
         if (!R2Bucket) {
             throw new Error(`Bucket '${bucket}' not found`);
         }
@@ -260,7 +260,7 @@ export class CFR2<TPlatform extends DefaultCloudflareplatform = DefaultCloudflar
     //    return _headers;
     //}
 
-    createUniqueKey(file: File, useFileName=true) {
+    createUniqueKey({ file, useFileName = true }: { file: File; useFileName?: boolean }) {
         // Generate unique key
         const timestamp = Date.now();
         const extension = file.name.split('.').pop() || 'jpg'; // maybe not good; throw error?
@@ -273,7 +273,7 @@ export class CFR2<TPlatform extends DefaultCloudflareplatform = DefaultCloudflar
         return key;
     }
 
-    setHttpMetadata(metadata: R2HTTPMetadata ) {
+    setHttpMetadata({ metadata }: { metadata: R2HTTPMetadata }) {
         let httpMetadata: Record<string, string>= {};
         httpMetadata['contentType'] = metadata.contentType || 'application/octet-stream';
         if(metadata.cacheControl) {
@@ -291,7 +291,7 @@ export class CFR2<TPlatform extends DefaultCloudflareplatform = DefaultCloudflar
         return httpMetadata;
     }
 
-    setCustomMetadata(metadata: CloudflareHelper.CustomMetadata) {
+    setCustomMetadata({ metadata }: { metadata: CF.CustomMetadata }) {
         let customMetadata: Record<string, string>= {};
         customMetadata['originalFileName'] = metadata.file.name;
         customMetadata['uploadedBy'] = metadata.userId || 'anonymous';
@@ -308,10 +308,10 @@ export class CFR2<TPlatform extends DefaultCloudflareplatform = DefaultCloudflar
         return customMetadata;
     }
 
-    async listBucketData({ name, options }: { name: string; options: R2ListOptions }): Promise<CloudflareHelper.R2ListAllResult> {
+    async listBucketData({ name, options }: { name: string; options: R2ListOptions }): Promise<CF.R2ListAllResult> {
         this.validateBucketName(name);
-        
-        const bucket = this.getBucket(name);
+
+        const bucket = this.getBucket({ bucketName: name });
         if (!bucket) {
             throw new Error(`Bucket '${name}' not found`);
         }
